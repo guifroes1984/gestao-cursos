@@ -1,0 +1,90 @@
+name: Integração contínua
+
+on:
+  push:
+    branches:
+      - main
+      - chore/preparar-ambiente
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend - build e testes
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: backend
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: gestao_cursos_teste
+          POSTGRES_USER: teste
+          POSTGRES_PASSWORD: teste_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U teste -d gestao_cursos_teste"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: gestao_cursos_teste
+      POSTGRES_USER: teste
+      POSTGRES_PASSWORD: teste_ci
+
+    steps:
+      - name: Obter código
+        uses: actions/checkout@v7
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+
+      - name: Compilar e testar
+        run: ./mvnw --batch-mode --no-transfer-progress clean verify
+
+  frontend:
+    name: Frontend - build e testes
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Obter código
+        uses: actions/checkout@v7
+
+      - name: Configurar Node 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.22.2"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Executar testes
+        run: npm test -- --watch=false
