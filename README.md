@@ -36,7 +36,7 @@ Backend e frontend gerados e validados localmente.
 Build e testes automatizados configurados no GitHub Actions.
 Funcionalidades de cursos ainda não implementadas.
 
-A execução será local, sem publicação em produção.o.
+A execução será local, sem publicação em produção.
 
 ## Documentação
 

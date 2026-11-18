@@ -29,7 +29,7 @@ testes automatizados e versionamento no GitHub, sem deploy.
 - Código de negócio em português.
 - Testes unitários para regras e testes de integração para persistência.
 - Entregas por issue, branch e pull request.
-- Integração contínua sem deploy, ainda a configurar.
+- Integração contínua configurada no GitHub Actions, sem deploy.
 
 ## Consequências
 
