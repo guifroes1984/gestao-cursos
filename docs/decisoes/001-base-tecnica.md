@@ -23,7 +23,9 @@ testes automatizados e versionamento no GitHub, sem deploy.
 - Open Session in View desabilitado.
 - Configurações externas fornecidas por variáveis de ambiente.
 - DevTools utilizado no desenvolvimento local.
-- Frontend em Angular e TypeScript; versão ainda a definir.
+- Angular e TypeScript, com projeto gerado pelo Angular CLI 22.2.7.
+- Componentes standalone, rotas, SCSS e modo estrito.
+- Renderização no navegador, sem SSR.
 - Código de negócio em português.
 - Testes unitários para regras e testes de integração para persistência.
 - Entregas por issue, branch e pull request.
