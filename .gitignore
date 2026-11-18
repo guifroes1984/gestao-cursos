@@ -1,0 +1,9 @@
+# Configurações locais
+.env
+.env.*
+!.env.example
+
+# IDEs
+.vscode/
+.idea/
+*.iml
